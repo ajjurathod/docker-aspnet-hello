@@ -1,14 +1,22 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0
 
+# Set working directory
 WORKDIR /app
 
-# Copy the HelloWorld directory and restore the dependencies
-COPY HelloWorld ./HelloWorld
-RUN dotnet restore ./HelloWorld/HelloWorld.csproj
+# Copy all project files
+COPY . .
 
-# Publish the app, specifying the .csproj file
-RUN dotnet publish ./HelloWorld/HelloWorld.csproj -c Release -o /app/published
+# Restore dependencies
+RUN dotnet restore docker-aspnet-hello.csproj
 
-WORKDIR /app/published
+# Build and publish the app
+RUN dotnet publish docker-aspnet-hello.csproj -c Release -o out
+
+# Set working directory to the published output
+WORKDIR /app/out
+
+# Expose default HTTP port
 EXPOSE 80
-ENTRYPOINT ["dotnet", "HelloWorld.dll"]
+
+# Run the application
+ENTRYPOINT ["dotnet", "docker-aspnet-hello.dll"]
