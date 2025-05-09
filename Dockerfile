@@ -13,5 +13,5 @@ COPY . .
 RUN dotnet publish HelloWorld/HelloWorld.csproj -c Release -o /app/published
 
 WORKDIR /app/published
-EXPOSE 80
+EXPOSE 80 
 ENTRYPOINT ["dotnet", "HelloWorld.dll"]
