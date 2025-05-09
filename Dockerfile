@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet restore HelloWorld.csproj
+RUN dotnet restore docker-aspnet-hello.csproj
 
-RUN dotnet publish HelloWorld.csproj -c Release -o out
+RUN dotnet publish docker-aspnet-hello.csproj -c Release -o out
 
 WORKDIR /app/out
 
 EXPOSE 80
 
-ENTRYPOINT ["dotnet", "HelloWorld.dll"]
+ENTRYPOINT ["dotnet", "docker-aspnet-hello.dll"]
