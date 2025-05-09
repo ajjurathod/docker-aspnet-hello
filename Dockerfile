@@ -2,11 +2,11 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 WORKDIR /app
 
-# Copy entire HelloWorld directory and restore
+# Copy the HelloWorld directory and restore the dependencies
 COPY HelloWorld ./HelloWorld
 RUN dotnet restore ./HelloWorld/HelloWorld.csproj
 
-# Publish the app
+# Publish the app, specifying the .csproj file
 RUN dotnet publish ./HelloWorld/HelloWorld.csproj -c Release -o /app/published
 
 WORKDIR /app/published
