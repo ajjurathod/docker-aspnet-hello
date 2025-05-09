@@ -1,12 +1,17 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0
+FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 WORKDIR /app
-COPY *.csproj ./
-RUN dotnet restore
 
+# Copy csproj and restore dependencies
+COPY HelloWorld/HelloWorld.csproj ./HelloWorld/
+RUN dotnet restore HelloWorld/HelloWorld.csproj
+
+# Copy rest of the source
 COPY . .
-RUN dotnet publish -c Release -o out
 
-WORKDIR /app/out
+# Publish the app
+RUN dotnet publish HelloWorld/HelloWorld.csproj -c Release -o /app/published
+
+WORKDIR /app/published
 EXPOSE 80
-ENTRYPOINT ["dotnet", "MyDotNetApp.dll"]
+ENTRYPOINT ["dotnet", "HelloWorld.dll"]
